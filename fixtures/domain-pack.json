@@ -1,0 +1,556 @@
+{
+  "domain": "seed-commercialization",
+  "version": 2,
+  "sample_id": "sample-016",
+  "generated_at": "2026-09-30",
+  "facts": [
+    "部分品种存在试种后推广最后一公里困难",
+    "企业计划从育种材料阶段参与研发",
+    "优势品种需要与区域和配套技术共同落地",
+    "企业需求在育种材料阶段即进入定向选择决策",
+    "试验地时段冲突的申请被平台驳回",
+    "阴性田间试验导致姊妹系被淘汰且不进入报审",
+    "联合育种材料的对外许可须经全体共有人书面同意",
+    "独占许可区域内的重复许可和过期许可下的销售均被判定为不合规",
+    "品种更名保留曾用名谱系，销售批次必须可回溯到已审定版本",
+    "推广端的负面反馈回流为新的市场信号并改变后续育种决策"
+  ],
+  "teams": [
+    { "id": "team-a", "name": "粳稻育种课题组", "type": "科研团队", "org": "虚构滨湖农科院" },
+    { "id": "team-b", "name": "稻作抗性资源团队", "type": "科研团队", "org": "虚构滨湖农科院" },
+    { "id": "team-c", "name": "南繁育种服务组", "type": "科研团队", "org": "虚构南繁基地" },
+    { "id": "ent-h", "name": "禾丰种业（虚构）", "type": "企业" },
+    { "id": "ent-l", "name": "绿仓种业（虚构）", "type": "企业" },
+    { "id": "platform", "name": "种业园转化平台", "type": "平台" }
+  ],
+  "germplasm": [
+    {
+      "id": "g-001",
+      "name": "老仓粳",
+      "source_type": "地方品种",
+      "source_detail": "虚构地方征集编号 DC-1958，食味品质优良",
+      "holder_team": "team-a",
+      "generation_label": "P",
+      "disclosure": "未公开",
+      "derived_from": []
+    },
+    {
+      "id": "g-002",
+      "name": "野稻抗源 WR-8",
+      "source_type": "野生资源",
+      "source_detail": "虚构野生稻圃保存材料，抗稻瘟",
+      "holder_team": "team-b",
+      "generation_label": "P",
+      "disclosure": "未公开",
+      "derived_from": []
+    },
+    {
+      "id": "g-003",
+      "name": "仓粳F1-03",
+      "source_type": "自育",
+      "holder_team": "team-a",
+      "generation_label": "F1",
+      "disclosure": "未公开",
+      "derived_from": ["g-001", "g-002"],
+      "created_via_decision": "d-01"
+    },
+    {
+      "id": "g-004",
+      "name": "仓粳BC1F1-11",
+      "source_type": "自育",
+      "holder_team": "team-a",
+      "generation_label": "BC1F1",
+      "disclosure": "合作可见",
+      "derived_from": ["g-003", "g-001"],
+      "created_via_decision": "d-02"
+    },
+    {
+      "id": "g-005",
+      "name": "仓粳F5-1709",
+      "source_type": "合作创制",
+      "source_detail": "粳稻课题组与禾丰种业联合育种协议 ja-01 产出",
+      "holder_team": "team-a",
+      "generation_label": "F5",
+      "disclosure": "合作可见",
+      "derived_from": ["g-004"],
+      "created_via_decision": "d-04"
+    },
+    {
+      "id": "g-006",
+      "name": "仓粳F5-1712",
+      "source_type": "自育",
+      "holder_team": "team-a",
+      "generation_label": "F5",
+      "disclosure": "未公开",
+      "derived_from": ["g-004"],
+      "note": "南繁耐冷筛选阴性，已被决策 d-05 淘汰"
+    },
+    {
+      "id": "g-007",
+      "name": "仓粳耐热F6-21",
+      "source_type": "合作创制",
+      "holder_team": "team-a",
+      "generation_label": "F6",
+      "disclosure": "合作可见",
+      "derived_from": ["g-005"],
+      "created_via_decision": "d-06"
+    },
+    {
+      "id": "g-008",
+      "name": "香粳F4-02",
+      "source_type": "自育",
+      "holder_team": "team-a",
+      "generation_label": "F4",
+      "disclosure": "未公开",
+      "derived_from": ["g-005"],
+      "note": "香型储备材料，尚未报审，不得对外供种"
+    }
+  ],
+  "market_signals": [
+    {
+      "id": "ms-01",
+      "date": "2022-03-18",
+      "source_enterprise": "ent-h",
+      "content": "直播稻面积扩大，企业要求材料在低氧出苗和稻瘟抗性上提前达标，目标黄淮与长江中下游直播茬口",
+      "demand_traits": ["耐低氧出苗", "抗稻瘟", "生育期适宜直播"],
+      "target_regions": ["黄淮稻区", "长江中下游"]
+    },
+    {
+      "id": "ms-02",
+      "date": "2024-09-10",
+      "source_enterprise": "ent-h",
+      "sourced_from_feedback": "pf-01",
+      "content": "2024 年黄淮南部高温导致结实率下降，推广反馈要求提高花期耐热性后再扩区",
+      "demand_traits": ["花期耐热", "高温结实率"],
+      "target_regions": ["黄淮稻区", "长江中下游"]
+    }
+  ],
+  "breeding_decisions": [
+    {
+      "id": "d-01",
+      "date": "2020-08-20",
+      "action": "配组",
+      "material_id": "g-001",
+      "output_material_id": "g-003",
+      "based_on_signal_ids": [],
+      "based_on_trial_ids": [],
+      "rationale": "聚合老仓粳食味品质与 WR-8 抗稻瘟背景"
+    },
+    {
+      "id": "d-02",
+      "date": "2021-03-15",
+      "action": "回交",
+      "material_id": "g-003",
+      "output_material_id": "g-004",
+      "based_on_signal_ids": [],
+      "based_on_trial_ids": [],
+      "rationale": "以老仓粳为轮回亲本恢复食味，保留抗性位点"
+    },
+    {
+      "id": "d-03",
+      "date": "2022-04-06",
+      "action": "定向选择",
+      "material_id": "g-004",
+      "based_on_signal_ids": ["ms-01"],
+      "based_on_trial_ids": [],
+      "rationale": "企业在材料阶段提出直播稻需求，BC1F1 分离世代起将耐低氧出苗纳入选择压，调整后代筛选指标"
+    },
+    {
+      "id": "d-04",
+      "date": "2022-09-02",
+      "action": "联合创制",
+      "material_id": "g-004",
+      "output_material_id": "g-005",
+      "based_on_signal_ids": ["ms-01"],
+      "based_on_trial_ids": [],
+      "rationale": "依据 ja-01 联合育种协议，企业提前介入共建稳定株系，市场需求指标写入系谱筛选表"
+    },
+    {
+      "id": "d-05",
+      "date": "2023-04-18",
+      "action": "淘汰",
+      "material_id": "g-006",
+      "based_on_signal_ids": [],
+      "based_on_trial_ids": ["ft-neg-01"],
+      "rationale": "南繁耐冷筛选阴性，结实率显著低于对照，淘汰该姊妹系且不进入区试报审"
+    },
+    {
+      "id": "d-06",
+      "date": "2024-09-25",
+      "action": "定向选择",
+      "material_id": "g-005",
+      "output_material_id": "g-007",
+      "based_on_signal_ids": ["ms-02"],
+      "based_on_trial_ids": [],
+      "rationale": "推广负面反馈回流为市场信号，从 F5 群体中定向选择花期耐热单株加代，形成耐热改良报审版本"
+    }
+  ],
+  "plots": [
+    { "id": "plot-1", "name": "北区站 3 号田", "location": "虚构黄淮试验站" },
+    { "id": "plot-2", "name": "南繁基地 B 区", "location": "虚构海南南繁基地" }
+  ],
+  "plot_bookings": [
+    {
+      "id": "bk-01",
+      "plot_id": "plot-1",
+      "team_id": "team-a",
+      "start_date": "2023-05-01",
+      "end_date": "2023-10-15",
+      "purpose": "株行圃与产量比较试验",
+      "trial_id": "ft-01",
+      "status": "已排定"
+    },
+    {
+      "id": "bk-02",
+      "plot_id": "plot-1",
+      "team_id": "team-c",
+      "start_date": "2023-06-10",
+      "end_date": "2023-09-30",
+      "purpose": "跨团队材料代繁鉴定",
+      "status": "已驳回",
+      "rejected_reason": "与已排定申请 bk-01 在同一地块时段重叠，平台排期校验驳回"
+    },
+    {
+      "id": "bk-03",
+      "plot_id": "plot-2",
+      "team_id": "team-a",
+      "start_date": "2023-01-10",
+      "end_date": "2023-04-05",
+      "purpose": "南繁耐冷筛选",
+      "trial_id": "ft-neg-01",
+      "status": "已完成"
+    },
+    {
+      "id": "bk-04",
+      "plot_id": "plot-1",
+      "team_id": "team-a",
+      "start_date": "2024-05-01",
+      "end_date": "2024-10-20",
+      "purpose": "区域试验供种田",
+      "trial_id": "ft-02",
+      "status": "已排定"
+    }
+  ],
+  "field_trials": [
+    {
+      "id": "ft-01",
+      "name": "株行圃比较试验",
+      "material_id": "g-005",
+      "plot_booking_id": "bk-01",
+      "location": "虚构黄淮试验站",
+      "season": "2023 正季",
+      "outcome": "阳性",
+      "indicators": [
+        { "name": "食味评分", "value": "83", "assessment": "优" },
+        { "name": "稻瘟抗性", "value": "抗", "assessment": "优" },
+        { "name": "耐低氧出苗", "value": "出苗率 91%", "assessment": "优" }
+      ],
+      "findings": "达到企业在 ms-01 中前置提出的直播稻指标，准予进入区试"
+    },
+    {
+      "id": "ft-neg-01",
+      "name": "南繁耐冷筛选",
+      "material_id": "g-006",
+      "plot_booking_id": "bk-03",
+      "location": "虚构海南南繁基地",
+      "season": "2023 南繁季",
+      "outcome": "阴性",
+      "indicators": [
+        { "name": "低温结实率", "value": "41%", "unit": "%", "assessment": "差" },
+        { "name": "株高整齐度", "value": "一般", "assessment": "中" }
+      ],
+      "findings": "花期耐冷性显著低于对照，未达利用价值",
+      "consequence": "淘汰材料 g-006，不进入区试与报审，负面记录留存谱系",
+      "resulting_decision_id": "d-05"
+    },
+    {
+      "id": "ft-02",
+      "name": "黄淮区域试验",
+      "material_id": "g-005",
+      "variety_version_id": "vv-001-0",
+      "plot_booking_id": "bk-04",
+      "location": "虚构黄淮稻区多点",
+      "season": "2024",
+      "outcome": "阳性",
+      "indicators": [
+        { "name": "区域试验增产率", "value": "6.4", "unit": "%", "assessment": "优" },
+        { "name": "食味评分", "value": "82", "assessment": "优" }
+      ],
+      "findings": "达标并支撑首次审定"
+    },
+    {
+      "id": "ft-03",
+      "name": "耐热改良版区试与耐热鉴定",
+      "material_id": "g-007",
+      "variety_version_id": "vv-001-1",
+      "location": "黄淮南部、长江中下游多点",
+      "season": "2025",
+      "outcome": "阳性",
+      "indicators": [
+        { "name": "高温结实率", "value": "88%", "unit": "%", "assessment": "优" },
+        { "name": "区试增产率", "value": "5.1", "unit": "%", "assessment": "优" }
+      ],
+      "findings": "针对 ms-02 的耐热改良达标，支撑扩区审定"
+    }
+  ],
+  "cultivation_packages": [
+    {
+      "id": "cp-01",
+      "title": "仓粳优1号直播稻配套栽培技术（黄淮）",
+      "variety_version_id": "vv-001-0",
+      "regions": ["黄淮稻区"],
+      "techniques": ["适期直播与播种量", "低氧出苗水层管理", "稻瘟病预防用药历", "抽穗期高温灌溉调温"]
+    },
+    {
+      "id": "cp-02",
+      "title": "仓粳优1号耐热改良版长江中下游栽培技术",
+      "variety_version_id": "vv-001-1",
+      "regions": ["长江中下游"],
+      "techniques": ["播期避开花期高温", "深水调温", "机插密度方案"]
+    }
+  ],
+  "varieties": [
+    {
+      "id": "v-001",
+      "current_name": "仓粳优1号",
+      "origin_material_id": "g-005",
+      "names": [
+        { "name": "A-1709株系", "type": "株系名", "effective_date": "2022-10-01" },
+        { "name": "苏仓粳1号", "type": "审定名", "effective_date": "2024-03-20" },
+        { "name": "仓粳优1号", "type": "更名", "effective_date": "2025-02-11", "reason": "与既有审定名称近似，按主管部门更名通知统一为仓粳优1号，曾用名谱系保留" }
+      ],
+      "versions": [
+        { "id": "vv-001-0", "label": "首次审定版", "material_id": "g-005", "status": "已审定" },
+        { "id": "vv-001-1", "label": "耐热改良版", "material_id": "g-007", "status": "已审定" },
+        { "id": "vv-001-2", "label": "香型储备版", "material_id": "g-008", "status": "育种中" }
+      ]
+    }
+  ],
+  "registrations": [
+    {
+      "id": "reg-01",
+      "variety_id": "v-001",
+      "variety_version_id": "vv-001-0",
+      "cert_no": "虚构审稻 2024-0017",
+      "decision_date": "2024-03-20",
+      "regions": ["黄淮稻区"],
+      "status": "有效",
+      "supporting_trial_ids": ["ft-02"]
+    },
+    {
+      "id": "reg-02",
+      "variety_id": "v-001",
+      "variety_version_id": "vv-001-1",
+      "cert_no": "虚构审稻 2026-0104",
+      "decision_date": "2026-06-18",
+      "regions": ["黄淮稻区", "长江中下游"],
+      "status": "有效",
+      "supporting_trial_ids": ["ft-03"]
+    }
+  ],
+  "joint_agreements": [
+    {
+      "id": "ja-01",
+      "title": "粳稻直播稻新品种联合育种协议（虚构）",
+      "start_date": "2022-08-01",
+      "resulting_material_id": "g-005",
+      "consent_rule": "全体共有人书面同意",
+      "parties": [
+        { "team_id": "team-a", "contributed_material_ids": ["g-004"], "share_pct": 60 },
+        { "team_id": "ent-h", "contributed_material_ids": [], "share_pct": 40 }
+      ]
+    }
+  ],
+  "ip_rights": [
+    {
+      "id": "ipr-01",
+      "variety_version_id": "vv-001-0",
+      "type": "植物新品种权",
+      "app_no": "虚构申请 2024-0331",
+      "grant_no": "虚构授权 CNA2024-0000",
+      "status": "授权",
+      "agreement_id": "ja-01",
+      "owners": [
+        { "team_id": "team-a", "share_pct": 60 },
+        { "team_id": "ent-h", "share_pct": 40 }
+      ]
+    },
+    {
+      "id": "ipr-02",
+      "variety_version_id": "vv-001-1",
+      "type": "植物新品种权",
+      "app_no": "虚构申请 2026-0712",
+      "grant_no": "虚构授权 CNA2026-0000",
+      "status": "授权",
+      "agreement_id": "ja-01",
+      "owners": [
+        { "team_id": "team-a", "share_pct": 60 },
+        { "team_id": "ent-h", "share_pct": 40 }
+      ]
+    }
+  ],
+  "licenses": [
+    {
+      "id": "lic-old",
+      "variety_version_id": "vv-001-0",
+      "licensee_id": "ent-h",
+      "license_type": "普通",
+      "regions": ["黄淮稻区"],
+      "start_date": "2024-01-01",
+      "end_date": "2025-12-31",
+      "status": "终止",
+      "consents": [
+        { "team_id": "team-a", "consented": true, "date": "2023-12-20" },
+        { "team_id": "ent-h", "consented": true, "date": "2023-12-20" }
+      ]
+    },
+    {
+      "id": "lic-01",
+      "variety_version_id": "vv-001-0",
+      "licensee_id": "ent-h",
+      "license_type": "独占",
+      "regions": ["黄淮稻区"],
+      "start_date": "2024-04-01",
+      "end_date": "2027-12-31",
+      "status": "有效",
+      "consents": [
+        { "team_id": "team-a", "consented": true, "date": "2024-03-25" },
+        { "team_id": "ent-h", "consented": true, "date": "2024-03-25" }
+      ]
+    },
+    {
+      "id": "lic-02",
+      "variety_version_id": "vv-001-0",
+      "licensee_id": "ent-l",
+      "license_type": "普通",
+      "regions": ["黄淮稻区"],
+      "start_date": "2024-05-01",
+      "end_date": "2027-05-01",
+      "status": "争议",
+      "consents": [
+        { "team_id": "team-a", "consented": true, "date": "2024-04-18" },
+        { "team_id": "ent-h", "consented": false }
+      ]
+    },
+    {
+      "id": "lic-03",
+      "variety_version_id": "vv-001-1",
+      "licensee_id": "ent-h",
+      "license_type": "普通",
+      "regions": ["长江中下游"],
+      "start_date": "2026-07-01",
+      "end_date": "2029-06-30",
+      "status": "有效",
+      "consents": [
+        { "team_id": "team-a", "consented": true, "date": "2026-06-25" },
+        { "team_id": "ent-h", "consented": true, "date": "2026-06-25" }
+      ]
+    }
+  ],
+  "enterprise_grants": [
+    {
+      "id": "eg-h",
+      "enterprise_id": "ent-h",
+      "granted_via": "联合育种协议",
+      "note": "禾丰种业自材料阶段参与，仅可见 ja-01 合作谱系与获准品种资料，其他团队未公开材料不在范围",
+      "scope": [
+        { "resource_type": "germplasm", "resource_ids": ["g-003", "g-004", "g-005", "g-007"] },
+        { "resource_type": "market_signals", "resource_ids": ["ms-01", "ms-02"] },
+        { "resource_type": "breeding_decisions", "resource_ids": ["d-03", "d-04", "d-06"] },
+        { "resource_type": "field_trials", "resource_ids": ["ft-01", "ft-03"] },
+        { "resource_type": "varieties", "resource_ids": ["v-001"] },
+        { "resource_type": "registrations", "resource_ids": ["reg-01", "reg-02"] },
+        { "resource_type": "ip_rights", "resource_ids": ["ipr-01", "ipr-02"] },
+        { "resource_type": "licenses", "resource_ids": ["lic-old", "lic-01", "lic-03"] },
+        { "resource_type": "cultivation_packages", "resource_ids": ["cp-01", "cp-02"] },
+        { "resource_type": "promotion_feedback", "resource_ids": ["pf-01", "pf-02"] },
+        { "resource_type": "sales_batches", "resource_ids": ["sb-ok", "sb-ok2"] }
+      ]
+    },
+    {
+      "id": "eg-l",
+      "enterprise_id": "ent-l",
+      "granted_via": "许可",
+      "note": "绿仓种业审定后才接触，仅可见争议许可所涉品种的公开版本信息，看不到任何育种材料与世代谱系",
+      "scope": [
+        { "resource_type": "varieties", "resource_ids": ["v-001"] },
+        { "resource_type": "registrations", "resource_ids": ["reg-01"] },
+        { "resource_type": "licenses", "resource_ids": ["lic-02"] }
+      ]
+    }
+  ],
+  "promotion_feedback": [
+    {
+      "id": "pf-01",
+      "license_id": "lic-01",
+      "region": "黄淮稻区",
+      "date": "2024-08-28",
+      "performance": [
+        { "indicator": "花期耐热", "value": "高温结实率 63%", "assessment": "差" },
+        { "indicator": "食味商品性", "value": "市场反馈好", "assessment": "优" }
+      ],
+      "cultivation_package_id": "cp-01",
+      "market_note": "南部茬口花期遭遇持续高温，现有栽培措施只能部分缓解，建议从育种侧改良耐热性",
+      "follow_up_signal_id": "ms-02"
+    },
+    {
+      "id": "pf-02",
+      "license_id": "lic-01",
+      "region": "黄淮稻区",
+      "date": "2025-09-12",
+      "performance": [
+        { "indicator": "直播成苗", "value": "成苗稳定", "assessment": "优" },
+        { "indicator": "稻瘟抗性", "value": "田间未见重病", "assessment": "优" }
+      ],
+      "cultivation_package_id": "cp-01",
+      "market_note": "配套技术到位率提高后，直播茬口表现稳定，企业续展意愿强"
+    }
+  ],
+  "sales_batches": [
+    {
+      "id": "sb-ok",
+      "date": "2026-03-10",
+      "license_id": "lic-01",
+      "variety_version_id": "vv-001-0",
+      "region": "黄淮稻区",
+      "propagation_level": "大田用种",
+      "quantity_kg": 12000
+    },
+    {
+      "id": "sb-ok2",
+      "date": "2026-08-05",
+      "license_id": "lic-03",
+      "variety_version_id": "vv-001-1",
+      "region": "长江中下游",
+      "propagation_level": "原种",
+      "quantity_kg": 3000
+    },
+    {
+      "id": "sb-bad-expired",
+      "date": "2026-04-12",
+      "license_id": "lic-old",
+      "variety_version_id": "vv-001-0",
+      "region": "黄淮稻区",
+      "propagation_level": "大田用种",
+      "quantity_kg": 2000
+    },
+    {
+      "id": "sb-bad-region",
+      "date": "2026-08-20",
+      "license_id": "lic-03",
+      "variety_version_id": "vv-001-1",
+      "region": "黄淮稻区",
+      "propagation_level": "大田用种",
+      "quantity_kg": 1500
+    },
+    {
+      "id": "sb-bad-version",
+      "date": "2026-09-02",
+      "license_id": null,
+      "variety_version_id": "vv-001-2",
+      "region": "黄淮稻区",
+      "propagation_level": "大田用种",
+      "quantity_kg": 800
+    }
+  ]
+}

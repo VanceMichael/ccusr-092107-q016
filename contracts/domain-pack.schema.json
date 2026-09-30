@@ -1,0 +1,385 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "良种成果转化接力领域资料包",
+  "description": "种质来源、育种世代、试验地、性状指标、审定登记、知识产权、许可与推广区域的连续谱系；企业仅可见授权范围。编号均为虚构。",
+  "type": "object",
+  "required": [
+    "domain",
+    "version",
+    "sample_id",
+    "facts",
+    "teams",
+    "germplasm",
+    "market_signals",
+    "breeding_decisions",
+    "plots",
+    "plot_bookings",
+    "field_trials",
+    "cultivation_packages",
+    "varieties",
+    "registrations",
+    "joint_agreements",
+    "ip_rights",
+    "licenses",
+    "enterprise_grants",
+    "promotion_feedback",
+    "sales_batches"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "domain": { "type": "string", "minLength": 1 },
+    "version": { "type": "integer", "minimum": 1 },
+    "sample_id": { "type": "string", "minLength": 1 },
+    "generated_at": { "type": "string" },
+    "facts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "teams": { "type": "array", "items": { "$ref": "#/$defs/team" } },
+    "germplasm": { "type": "array", "items": { "$ref": "#/$defs/germplasm" } },
+    "market_signals": { "type": "array", "items": { "$ref": "#/$defs/market_signal" } },
+    "breeding_decisions": { "type": "array", "items": { "$ref": "#/$defs/breeding_decision" } },
+    "plots": { "type": "array", "items": { "$ref": "#/$defs/plot" } },
+    "plot_bookings": { "type": "array", "items": { "$ref": "#/$defs/plot_booking" } },
+    "field_trials": { "type": "array", "items": { "$ref": "#/$defs/field_trial" } },
+    "cultivation_packages": { "type": "array", "items": { "$ref": "#/$defs/cultivation_package" } },
+    "varieties": { "type": "array", "items": { "$ref": "#/$defs/variety" } },
+    "registrations": { "type": "array", "items": { "$ref": "#/$defs/registration" } },
+    "joint_agreements": { "type": "array", "items": { "$ref": "#/$defs/joint_agreement" } },
+    "ip_rights": { "type": "array", "items": { "$ref": "#/$defs/ip_right" } },
+    "licenses": { "type": "array", "items": { "$ref": "#/$defs/license" } },
+    "enterprise_grants": { "type": "array", "items": { "$ref": "#/$defs/enterprise_grant" } },
+    "promotion_feedback": { "type": "array", "items": { "$ref": "#/$defs/promotion_feedback" } },
+    "sales_batches": { "type": "array", "items": { "$ref": "#/$defs/sales_batch" } }
+  },
+  "$defs": {
+    "team": {
+      "type": "object",
+      "required": ["id", "name", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "type": { "enum": ["科研团队", "企业", "平台"] },
+        "org": { "type": "string" }
+      }
+    },
+    "germplasm": {
+      "type": "object",
+      "required": ["id", "name", "source_type", "holder_team", "generation_label", "disclosure", "derived_from"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "source_type": { "enum": ["地方品种", "野生资源", "引种", "自育", "合作创制"] },
+        "source_detail": { "type": "string" },
+        "holder_team": { "type": "string", "description": "持有团队 team id" },
+        "generation_label": { "type": "string", "description": "如 P/F1/BC1F1/F5" },
+        "disclosure": { "enum": ["未公开", "合作可见", "已公开"] },
+        "derived_from": { "type": "array", "items": { "type": "string" } },
+        "created_via_decision": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "market_signal": {
+      "type": "object",
+      "required": ["id", "date", "content", "demand_traits", "target_regions"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string", "description": "YYYY-MM-DD" },
+        "source_enterprise": { "type": "string" },
+        "sourced_from_feedback": { "type": "string", "description": "由推广反馈转化而来时填写 feedback id" },
+        "content": { "type": "string" },
+        "demand_traits": { "type": "array", "items": { "type": "string" } },
+        "target_regions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "breeding_decision": {
+      "type": "object",
+      "required": ["id", "date", "action", "material_id", "rationale"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "action": { "enum": ["配组", "回交", "加代", "定向选择", "淘汰", "联合创制", "扩区报审"] },
+        "material_id": { "type": "string", "description": "决策所针对的材料" },
+        "output_material_id": { "type": "string", "description": "决策产出的新材料，淘汰类决策为空" },
+        "based_on_signal_ids": { "type": "array", "items": { "type": "string" } },
+        "based_on_trial_ids": { "type": "array", "items": { "type": "string" } },
+        "rationale": { "type": "string" }
+      }
+    },
+    "plot": {
+      "type": "object",
+      "required": ["id", "name", "location"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "location": { "type": "string" }
+      }
+    },
+    "plot_booking": {
+      "type": "object",
+      "required": ["id", "plot_id", "team_id", "start_date", "end_date", "purpose", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "plot_id": { "type": "string" },
+        "team_id": { "type": "string" },
+        "start_date": { "type": "string" },
+        "end_date": { "type": "string" },
+        "purpose": { "type": "string" },
+        "trial_id": { "type": "string" },
+        "status": { "enum": ["申请中", "已排定", "已驳回", "已完成"] },
+        "rejected_reason": { "type": "string" }
+      }
+    },
+    "field_trial": {
+      "type": "object",
+      "required": ["id", "name", "season", "outcome", "indicators", "findings"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "material_id": { "type": "string" },
+        "variety_version_id": { "type": "string" },
+        "plot_booking_id": { "type": "string" },
+        "location": { "type": "string" },
+        "season": { "type": "string" },
+        "outcome": { "enum": ["阳性", "阴性", "待定"] },
+        "indicators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "assessment"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "value": { "type": "string" },
+              "unit": { "type": "string" },
+              "assessment": { "enum": ["优", "中", "差"] }
+            }
+          }
+        },
+        "findings": { "type": "string" },
+        "consequence": { "type": "string", "description": "阴性试验的处置：淘汰材料、移出推广区域等" },
+        "resulting_decision_id": { "type": "string" }
+      }
+    },
+    "cultivation_package": {
+      "type": "object",
+      "required": ["id", "title", "variety_version_id", "regions", "techniques"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "variety_version_id": { "type": "string" },
+        "regions": { "type": "array", "items": { "type": "string" } },
+        "techniques": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "variety": {
+      "type": "object",
+      "required": ["id", "current_name", "origin_material_id", "names", "versions"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "current_name": { "type": "string" },
+        "origin_material_id": { "type": "string" },
+        "names": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "type", "effective_date"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "enum": ["株系名", "审定名", "更名"] },
+              "effective_date": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          }
+        },
+        "versions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "label", "material_id", "status"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "label": { "type": "string" },
+              "material_id": { "type": "string", "description": "该版本对应的育种材料世代" },
+              "status": { "enum": ["育种中", "报审", "已审定", "退出"] }
+            }
+          }
+        }
+      }
+    },
+    "registration": {
+      "type": "object",
+      "required": ["id", "variety_id", "variety_version_id", "cert_no", "decision_date", "regions", "status", "supporting_trial_ids"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "variety_id": { "type": "string" },
+        "variety_version_id": { "type": "string" },
+        "cert_no": { "type": "string" },
+        "decision_date": { "type": "string" },
+        "regions": { "type": "array", "items": { "type": "string" } },
+        "status": { "enum": ["有效", "撤销", "到期"] },
+        "supporting_trial_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "joint_agreement": {
+      "type": "object",
+      "required": ["id", "title", "start_date", "consent_rule", "parties"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "start_date": { "type": "string" },
+        "resulting_material_id": { "type": "string" },
+        "consent_rule": { "enum": ["全体共有人书面同意", "首席单位同意"] },
+        "parties": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["team_id", "share_pct"],
+            "additionalProperties": false,
+            "properties": {
+              "team_id": { "type": "string" },
+              "contributed_material_ids": { "type": "array", "items": { "type": "string" } },
+              "share_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+            }
+          }
+        }
+      }
+    },
+    "ip_right": {
+      "type": "object",
+      "required": ["id", "variety_version_id", "type", "status", "agreement_id", "owners"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "variety_version_id": { "type": "string" },
+        "type": { "enum": ["植物新品种权", "专利"] },
+        "app_no": { "type": "string" },
+        "grant_no": { "type": "string" },
+        "status": { "enum": ["申请中", "授权", "驳回", "终止"] },
+        "agreement_id": { "type": "string" },
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["team_id", "share_pct"],
+            "additionalProperties": false,
+            "properties": {
+              "team_id": { "type": "string" },
+              "share_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+            }
+          }
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "required": ["id", "variety_version_id", "licensee_id", "license_type", "regions", "start_date", "end_date", "status", "consents"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "variety_version_id": { "type": "string" },
+        "licensee_id": { "type": "string" },
+        "license_type": { "enum": ["独占", "排他", "普通"] },
+        "regions": { "type": "array", "items": { "type": "string" } },
+        "start_date": { "type": "string" },
+        "end_date": { "type": "string" },
+        "status": { "enum": ["待生效", "有效", "争议", "终止"] },
+        "consents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["team_id", "consented"],
+            "additionalProperties": false,
+            "properties": {
+              "team_id": { "type": "string" },
+              "consented": { "type": "boolean" },
+              "date": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "enterprise_grant": {
+      "type": "object",
+      "required": ["id", "enterprise_id", "granted_via", "scope"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "enterprise_id": { "type": "string" },
+        "granted_via": { "enum": ["联合育种协议", "许可", "专项协议"] },
+        "note": { "type": "string" },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["resource_type", "resource_ids"],
+            "additionalProperties": false,
+            "properties": {
+              "resource_type": {
+                "enum": ["germplasm", "market_signals", "breeding_decisions", "field_trials", "varieties", "registrations", "ip_rights", "licenses", "cultivation_packages", "promotion_feedback", "sales_batches"]
+              },
+              "resource_ids": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "promotion_feedback": {
+      "type": "object",
+      "required": ["id", "license_id", "region", "date", "performance", "market_note"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "license_id": { "type": "string" },
+        "region": { "type": "string" },
+        "date": { "type": "string" },
+        "performance": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["indicator", "assessment"],
+            "additionalProperties": false,
+            "properties": {
+              "indicator": { "type": "string" },
+              "value": { "type": "string" },
+              "assessment": { "enum": ["优", "中", "差"] }
+            }
+          }
+        },
+        "cultivation_package_id": { "type": "string" },
+        "market_note": { "type": "string" },
+        "follow_up_signal_id": { "type": "string" }
+      }
+    },
+    "sales_batch": {
+      "type": "object",
+      "required": ["id", "date", "variety_version_id", "region", "propagation_level", "quantity_kg"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "license_id": { "type": ["string", "null"] },
+        "variety_version_id": { "type": "string" },
+        "region": { "type": "string" },
+        "propagation_level": { "enum": ["原原种", "原种", "大田用种"] },
+        "quantity_kg": { "type": "number", "minimum": 0 }
+      }
+    }
+  }
+}
