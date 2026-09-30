@@ -1,0 +1,547 @@
+{
+  "teams": [
+    { "id": "team-rice-a", "name": "市农科院水稻所" },
+    { "id": "team-rice-b", "name": "大学农学院水稻实验室" },
+    { "id": "team-corn-c", "name": "山地玉米中心" }
+  ],
+  "enterprises": [
+    { "id": "ent-seedco", "name": "丰禾种业" },
+    { "id": "ent-greenfield", "name": "绿野农服" },
+    { "id": "ent-outsider", "name": "远途贸易" }
+  ],
+  "germplasm": [
+    {
+      "id": "ger-local",
+      "name": "山塘地方早熟稻",
+      "source_kind": "地方种",
+      "origin_note": "湘南山区征集的早熟地方种，2019 年入圃",
+      "owner_team_ids": ["team-rice-a"],
+      "public_status": "未公开"
+    },
+    {
+      "id": "ger-intro",
+      "name": "引进系 IR-2091",
+      "source_kind": "引进系",
+      "origin_note": "国际交换引入，耐热背景",
+      "owner_team_ids": ["team-rice-a"],
+      "public_status": "已公开"
+    },
+    {
+      "id": "ger-donor",
+      "name": "抗稻瘟供体 BL-7",
+      "source_kind": "创制中间材料",
+      "origin_note": "水稻实验室自有抗性导入系",
+      "owner_team_ids": ["team-rice-b"],
+      "public_status": "未公开"
+    },
+    {
+      "id": "ger-maize",
+      "name": "山地玉米地方群",
+      "source_kind": "地方种",
+      "owner_team_ids": ["team-corn-c"],
+      "public_status": "未公开"
+    }
+  ],
+  "breeding_generations": [
+    {
+      "id": "gen-f1-2020",
+      "code": "20F1-07",
+      "team_id": "team-rice-a",
+      "generation": "F1",
+      "year": 2020,
+      "parent_ids": ["ger-local", "ger-intro"],
+      "traits": [
+        { "name": "早熟性", "value": "倾向早熟亲本" },
+        { "name": "耐热", "value": "田间观察中等" }
+      ],
+      "status": "入选定型"
+    },
+    {
+      "id": "gen-f2-2021",
+      "code": "21F2-07",
+      "team_id": "team-rice-a",
+      "generation": "F2",
+      "year": 2021,
+      "parent_ids": ["gen-f1-2020"],
+      "traits": [{ "name": "生育期", "value": "112 天" }],
+      "status": "入选定型"
+    },
+    {
+      "id": "gen-sib-upland",
+      "code": "21F2-19",
+      "team_id": "team-rice-a",
+      "generation": "F2",
+      "year": 2021,
+      "parent_ids": ["gen-f1-2020"],
+      "traits": [{ "name": "旱作适应性", "value": "姊妹系中表现最好但仍不达标" }],
+      "status": "淘汰"
+    },
+    {
+      "id": "gen-bc1-2022",
+      "code": "22BC1-03",
+      "team_id": "team-rice-b",
+      "generation": "BC1",
+      "year": 2022,
+      "parent_ids": ["gen-f2-2021", "ger-donor"],
+      "traits": [{ "name": "稻瘟病抗性", "value": "叶瘟 1 级" }],
+      "status": "入选定型"
+    },
+    {
+      "id": "gen-stable-2023",
+      "code": "23JS-24",
+      "team_id": "team-rice-a",
+      "generation": "稳定株系",
+      "year": 2023,
+      "parent_ids": ["gen-bc1-2022"],
+      "traits": [
+        { "name": "生育期", "value": "110 天" },
+        { "name": "稻瘟病抗性", "value": "综合抗" },
+        { "name": "亩产", "value": "582 公斤" }
+      ],
+      "status": "入选定型"
+    },
+    {
+      "id": "gen-cycle2-2025",
+      "code": "25RS-02",
+      "team_id": "team-rice-a",
+      "generation": "轮回选择群体",
+      "year": 2025,
+      "parent_ids": ["gen-stable-2023"],
+      "traits": [{ "name": "抗落粒", "value": "新一轮选择目标" }],
+      "status": "在育"
+    },
+    {
+      "id": "gen-maize-01",
+      "code": "M-S7",
+      "team_id": "team-corn-c",
+      "generation": "S7",
+      "year": 2024,
+      "parent_ids": ["ger-maize"],
+      "traits": [{ "name": "耐瘠薄", "value": "测定中" }],
+      "status": "在育"
+    }
+  ],
+  "trial_sites": [
+    {
+      "id": "site-yz",
+      "name": "永州双季稻试点",
+      "region_code": "R-SOUTH",
+      "time_slots": [
+        {
+          "id": "slot-yz-2021-spring",
+          "year": 2021,
+          "season": "春",
+          "booking": { "team_id": "team-rice-a", "subject_id": "gen-f2-2021", "trial_id": "tri-001" }
+        },
+        {
+          "id": "slot-yz-2023-spring",
+          "year": 2023,
+          "season": "春",
+          "booking": { "team_id": "team-rice-a", "subject_id": "gen-stable-2023", "trial_id": "tri-003" }
+        },
+        {
+          "id": "slot-yz-2025-spring",
+          "year": 2025,
+          "season": "春",
+          "booking": { "team_id": "team-rice-a", "subject_id": "gen-cycle2-2025", "trial_id": "tri-005" }
+        }
+      ]
+    },
+    {
+      "id": "site-hh",
+      "name": "红河旱作试点",
+      "region_code": "R-UPLAND",
+      "time_slots": [
+        {
+          "id": "slot-hh-2022-rain",
+          "year": 2022,
+          "season": "雨季",
+          "booking": { "team_id": "team-rice-a", "subject_id": "gen-sib-upland", "trial_id": "tri-002" }
+        }
+      ]
+    }
+  ],
+  "trials": [
+    {
+      "id": "tri-001",
+      "subject_id": "gen-f2-2021",
+      "site_id": "site-yz",
+      "slot_id": "slot-yz-2021-spring",
+      "year": 2021,
+      "team_id": "team-rice-a",
+      "indicators": [
+        { "name": "生育期", "value": "112 天", "meets_target": true },
+        { "name": "开花期耐热", "value": "中抗", "meets_target": true }
+      ],
+      "outcome": "达标晋级"
+    },
+    {
+      "id": "tri-002",
+      "subject_id": "gen-sib-upland",
+      "site_id": "site-hh",
+      "slot_id": "slot-hh-2022-rain",
+      "year": 2022,
+      "team_id": "team-rice-a",
+      "indicators": [
+        { "name": "旱作倒伏率", "value": "41%", "meets_target": false },
+        { "name": "旱作结实率", "value": "53%", "meets_target": false }
+      ],
+      "outcome": "负面淘汰",
+      "negative_detail": "雨季旱作条件下大面积倒伏、结实率骤降，证明该姊妹系不适应山地旱作。"
+    },
+    {
+      "id": "tri-003",
+      "subject_id": "gen-stable-2023",
+      "site_id": "site-yz",
+      "slot_id": "slot-yz-2023-spring",
+      "year": 2023,
+      "team_id": "team-rice-a",
+      "indicators": [
+        { "name": "稻瘟病综合抗性", "value": "抗", "meets_target": true },
+        { "name": "亩产", "value": "582 公斤", "meets_target": true },
+        { "name": "生育期", "value": "110 天", "meets_target": true }
+      ],
+      "outcome": "达标晋级"
+    },
+    {
+      "id": "tri-004",
+      "subject_id": "gen-maize-01",
+      "site_id": "site-yz",
+      "slot_id": "slot-yz-2025-spring",
+      "year": 2025,
+      "team_id": "team-corn-c",
+      "indicators": [],
+      "outcome": "待定"
+    },
+    {
+      "id": "tri-005",
+      "subject_id": "gen-cycle2-2025",
+      "site_id": "site-yz",
+      "slot_id": "slot-yz-2025-spring",
+      "year": 2025,
+      "team_id": "team-rice-a",
+      "indicators": [{ "name": "抗落粒", "value": "观察中", "meets_target": true }],
+      "outcome": "待定"
+    }
+  ],
+  "market_signals": [
+    {
+      "id": "sig-001",
+      "enterprise_id": "ent-seedco",
+      "received_date": "2020-03-10",
+      "channel": "前置对接会",
+      "summary": "双季早稻抢早上市溢价明显，企业希望在分离世代即锁定早熟材料。",
+      "demands": [
+        { "trait": "早熟", "expectation": "7 月 15 日前成熟", "region_code": "R-SOUTH" },
+        { "trait": "开花期耐热", "expectation": "中抗以上", "region_code": "R-SOUTH" }
+      ]
+    },
+    {
+      "id": "sig-002",
+      "enterprise_id": "ent-seedco",
+      "received_date": "2022-01-18",
+      "channel": "联合育种协议",
+      "summary": "联合育种协议把抗稻瘟列为早稻组合的商业化前置条件。",
+      "demands": [
+        { "trait": "稻瘟病抗性", "expectation": "综合抗以上", "region_code": "R-SOUTH" }
+      ]
+    },
+    {
+      "id": "sig-003",
+      "enterprise_id": "ent-seedco",
+      "received_date": "2025-07-22",
+      "channel": "推广反馈",
+      "summary": "机收农户反馈落粒损失大、株高不整齐，要求下一代适合机械化收获。",
+      "demands": [
+        { "trait": "抗落粒", "expectation": "机收损失率低于 3%", "region_code": "R-SOUTH" },
+        { "trait": "株高整齐度", "expectation": "变异系数低于 5%", "region_code": "R-SOUTH" }
+      ]
+    },
+    {
+      "id": "sig-004",
+      "enterprise_id": "ent-seedco",
+      "received_date": "2024-11-05",
+      "channel": "订单咨询",
+      "summary": "经销商反映试验代号不利于品牌识别，建议上市前确定商品名。",
+      "demands": [
+        { "trait": "商品名称", "expectation": "统一、可识别的推广名称", "region_code": "R-SOUTH" }
+      ]
+    }
+  ],
+  "breeding_decisions": [
+    {
+      "id": "dec-001",
+      "date": "2020-03-25",
+      "team_id": "team-rice-a",
+      "generation_id": "gen-f1-2020",
+      "based_on_signal_ids": ["sig-001"],
+      "action": "调整目标性状",
+      "rationale": "企业在材料阶段提出抢早需求，将早熟从次要性状调整为首要选择目标，并保留耐热背景亲本。"
+    },
+    {
+      "id": "dec-002",
+      "date": "2022-11-10",
+      "team_id": "team-rice-a",
+      "generation_id": "gen-sib-upland",
+      "trial_ids": ["tri-002"],
+      "action": "终止世代",
+      "rationale": "红河旱区负面试验证明 21F2-19 姊妹系不适应山地旱作，终止该系以集中名额推进抗稻瘟回交群体。"
+    },
+    {
+      "id": "dec-003",
+      "date": "2022-01-25",
+      "team_id": "team-rice-b",
+      "generation_id": "gen-bc1-2022",
+      "based_on_signal_ids": ["sig-002"],
+      "action": "更换亲本",
+      "rationale": "依据联合育种协议的商业化前置条件，引入自有抗稻瘟供体 BL-7 开展回交转育。"
+    },
+    {
+      "id": "dec-004",
+      "date": "2024-12-01",
+      "team_id": "team-rice-a",
+      "variety_id": "var-jingzao",
+      "based_on_signal_ids": ["sig-004"],
+      "action": "更名",
+      "rationale": "审定通过、推广启动前，将试验名称统一为商品名，旧名仅保留历史可追溯。"
+    },
+    {
+      "id": "dec-005",
+      "date": "2025-08-05",
+      "team_id": "team-rice-a",
+      "generation_id": "gen-cycle2-2025",
+      "based_on_signal_ids": ["sig-003"],
+      "action": "调整目标性状",
+      "rationale": "推广季反馈的机收落粒问题回流育种端，在新一轮轮回群体中加入抗落粒与株高整齐度选择压。"
+    }
+  ],
+  "varieties": [
+    {
+      "id": "var-jingzao",
+      "versions": [
+        {
+          "version_no": "v1",
+          "derived_from_generation_id": "gen-stable-2023",
+          "breeding_team_ids": ["team-rice-a", "team-rice-b"],
+          "joint_breeding": true,
+          "released_date": "2023-06-18",
+          "status": "已审定"
+        },
+        {
+          "version_no": "v2",
+          "derived_from_generation_id": "gen-cycle2-2025",
+          "breeding_team_ids": ["team-rice-a", "team-rice-b"],
+          "joint_breeding": true,
+          "released_date": "2025-09-01",
+          "status": "在试"
+        }
+      ]
+    },
+    {
+      "id": "var-maize-7",
+      "versions": [
+        {
+          "version_no": "v1",
+          "derived_from_generation_id": "gen-maize-01",
+          "breeding_team_ids": ["team-corn-c"],
+          "joint_breeding": false,
+          "released_date": "2025-05-01",
+          "status": "在试"
+        }
+      ]
+    }
+  ],
+  "variety_names": [
+    {
+      "variety_id": "var-jingzao",
+      "name": "试24优",
+      "current": false,
+      "effective_date": "2023-06-18",
+      "reason": "试验代号化名称，不利于市场识别。"
+    },
+    {
+      "variety_id": "var-jingzao",
+      "name": "金早丰",
+      "current": true,
+      "effective_date": "2025-01-10",
+      "renamed_from": "试24优",
+      "reason": "推广前统一商品名。"
+    },
+    {
+      "variety_id": "var-maize-7",
+      "name": "玉试7号",
+      "current": true,
+      "effective_date": "2025-05-01"
+    }
+  ],
+  "registrations": [
+    {
+      "id": "reg-001",
+      "variety_id": "var-jingzao",
+      "version_no": "v1",
+      "kind": "省级审定",
+      "number": "湘审稻2024088",
+      "status": "通过",
+      "adapted_regions": ["R-SOUTH"],
+      "issued_date": "2024-06-20"
+    }
+  ],
+  "plant_variety_rights": [
+    {
+      "id": "pvr-001",
+      "variety_id": "var-jingzao",
+      "version_no": "v1",
+      "number": "CNA20231234567",
+      "status": "授权",
+      "owners": [
+        { "team_id": "team-rice-a", "share": 60 },
+        { "team_id": "team-rice-b", "share": 40 }
+      ]
+    }
+  ],
+  "licenses": [
+    {
+      "id": "lic-001",
+      "variety_id": "var-jingzao",
+      "version_no": "v1",
+      "licensee_enterprise_id": "ent-seedco",
+      "type": "排他",
+      "regions": ["R-SOUTH"],
+      "status": "生效",
+      "start_date": "2024-09-01",
+      "end_date": "2029-08-31",
+      "co_owner_consents": [
+        { "team_id": "team-rice-a", "consented": true, "date": "2024-08-20" },
+        { "team_id": "team-rice-b", "consented": true, "date": "2024-08-22" }
+      ]
+    },
+    {
+      "id": "lic-002",
+      "variety_id": "var-jingzao",
+      "version_no": "v1",
+      "licensee_enterprise_id": "ent-greenfield",
+      "type": "普通",
+      "regions": ["R-EAST"],
+      "status": "生效",
+      "start_date": "2024-12-01",
+      "end_date": "2027-11-30",
+      "co_owner_consents": [
+        { "team_id": "team-rice-a", "consented": true, "date": "2024-11-18" },
+        { "team_id": "team-rice-b", "consented": false }
+      ]
+    }
+  ],
+  "data_grants": [
+    {
+      "id": "grt-001",
+      "enterprise_id": "ent-seedco",
+      "scope": {
+        "germplasm_ids": ["ger-local", "ger-intro"],
+        "generation_ids": ["gen-f1-2020", "gen-f2-2021", "gen-bc1-2022", "gen-stable-2023"],
+        "variety_version_refs": [{ "variety_id": "var-jingzao", "version_no": "v1" }]
+      }
+    },
+    {
+      "id": "grt-002",
+      "enterprise_id": "ent-greenfield",
+      "scope": {
+        "germplasm_ids": [],
+        "generation_ids": [],
+        "variety_version_refs": [{ "variety_id": "var-jingzao", "version_no": "v1" }]
+      }
+    }
+  ],
+  "cultivation_guides": [
+    {
+      "id": "gui-001",
+      "variety_id": "var-jingzao",
+      "version_no": "v1",
+      "region_code": "R-SOUTH",
+      "team_id": "team-rice-a",
+      "content_summary": "早稻 3 月下旬播种、软盘育秧、基蘖肥比例 7:3，配套早发栽培。"
+    },
+    {
+      "id": "gui-002",
+      "variety_id": "var-jingzao",
+      "version_no": "v1",
+      "region_code": "R-SOUTH",
+      "team_id": "team-rice-b",
+      "content_summary": "稻瘟病绿色防控配套：破口期预防结合抗性品种减量用药方案。"
+    }
+  ],
+  "promotion_feedbacks": [
+    {
+      "id": "fb-001",
+      "variety_id": "var-jingzao",
+      "version_no": "v1",
+      "region_code": "R-SOUTH",
+      "enterprise_id": "ent-seedco",
+      "date": "2025-07-20",
+      "summary": "机收留落粒损失约 6%，田块间株高差 8 厘米，影响收割效率。",
+      "resulted_signal_id": "sig-003"
+    }
+  ],
+  "seed_batches": [
+    {
+      "id": "bat-001",
+      "variety_id": "var-jingzao",
+      "version_no": "v1",
+      "labeled_name": "金早丰",
+      "license_id": "lic-001",
+      "produced_date": "2025-02-10"
+    },
+    {
+      "id": "bat-002",
+      "variety_id": "var-jingzao",
+      "version_no": "v1",
+      "labeled_name": "试24优",
+      "license_id": "lic-001",
+      "produced_date": "2025-03-05"
+    },
+    {
+      "id": "bat-003",
+      "variety_id": "var-jingzao",
+      "version_no": "v2",
+      "labeled_name": "金早丰",
+      "license_id": "lic-002",
+      "produced_date": "2025-04-12"
+    }
+  ],
+  "sales": [
+    {
+      "id": "sal-001",
+      "batch_id": "bat-001",
+      "enterprise_id": "ent-seedco",
+      "region_code": "R-SOUTH",
+      "date": "2025-04-15"
+    },
+    {
+      "id": "sal-002",
+      "batch_id": "bat-002",
+      "enterprise_id": "ent-seedco",
+      "region_code": "R-SOUTH",
+      "date": "2025-05-08"
+    },
+    {
+      "id": "sal-003",
+      "batch_id": "bat-003",
+      "enterprise_id": "ent-greenfield",
+      "region_code": "R-EAST",
+      "date": "2025-05-20"
+    },
+    {
+      "id": "sal-004",
+      "batch_id": "bat-001",
+      "enterprise_id": "ent-outsider",
+      "region_code": "R-SOUTH",
+      "date": "2025-05-22"
+    },
+    {
+      "id": "sal-005",
+      "batch_id": "bat-001",
+      "enterprise_id": "ent-seedco",
+      "region_code": "R-EAST",
+      "date": "2025-06-02"
+    }
+  ]
+}

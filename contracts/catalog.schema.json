@@ -1,0 +1,482 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "良种成果转化连续谱系目录",
+  "description": "从种质材料到市场推广的连续记录：种质→育种世代→试验→品种版本→审定登记/品种权→许可→种子批次→销售，以及把市场信息回流到育种决策的证据链。所有标识均为业务编号，不使用真实个人信息。",
+  "type": "object",
+  "required": [
+    "teams",
+    "enterprises",
+    "germplasm",
+    "breeding_generations",
+    "trial_sites",
+    "trials",
+    "market_signals",
+    "breeding_decisions",
+    "varieties",
+    "variety_names",
+    "registrations",
+    "plant_variety_rights",
+    "licenses",
+    "data_grants",
+    "cultivation_guides",
+    "promotion_feedbacks",
+    "seed_batches",
+    "sales"
+  ],
+  "properties": {
+    "teams": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^team-" },
+          "name": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      },
+      "uniqueItems": true
+    },
+    "enterprises": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^ent-" },
+          "name": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "germplasm": {
+      "type": "array",
+      "description": "种质资源，谱系起点。",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "source_kind", "owner_team_ids", "public_status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^ger-" },
+          "name": { "type": "string", "minLength": 1 },
+          "source_kind": {
+            "type": "string",
+            "enum": ["地方种", "引进系", "野生近缘", "创制中间材料", "外单位交换"]
+          },
+          "origin_note": { "type": "string" },
+          "owner_team_ids": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "public_status": { "type": "string", "enum": ["未公开", "已公开"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "breeding_generations": {
+      "type": "array",
+      "description": "育种世代材料；parents 指向更早的种质或世代，形成可回溯的血缘链。",
+      "items": {
+        "type": "object",
+        "required": ["id", "code", "team_id", "generation", "year", "parent_ids", "status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^gen-" },
+          "code": { "type": "string", "minLength": 1 },
+          "team_id": { "type": "string" },
+          "generation": { "type": "string", "minLength": 1 },
+          "year": { "type": "integer" },
+          "parent_ids": { "type": "array", "items": { "type": "string" } },
+          "traits": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "value"],
+              "properties": {
+                "name": { "type": "string" },
+                "value": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "status": { "type": "string", "enum": ["在育", "淘汰", "入选定型"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "trial_sites": {
+      "type": "array",
+      "description": "试验地块/设施，时段预约以 site_id+年份+茬口 为资源单位。",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "region_code", "time_slots"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^site-" },
+          "name": { "type": "string" },
+          "region_code": { "type": "string", "minLength": 1 },
+          "time_slots": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "year", "season"],
+              "properties": {
+                "id": { "type": "string", "pattern": "^slot-" },
+                "year": { "type": "integer" },
+                "season": { "type": "string", "enum": ["春", "夏", "秋", "冬", "旱季", "雨季"] },
+                "booking": {
+                  "type": "object",
+                  "description": "为空表示该时段尚未安排。",
+                  "required": ["team_id", "subject_id"],
+                  "properties": {
+                    "team_id": { "type": "string" },
+                    "subject_id": { "type": "string" },
+                    "trial_id": { "type": "string" }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "trials": {
+      "type": "array",
+      "description": "试验记录，包含成功与负面结果；负面试验同样是谱系决策证据。",
+      "items": {
+        "type": "object",
+        "required": ["id", "subject_id", "site_id", "slot_id", "year", "team_id", "outcome"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^tri-" },
+          "subject_id": {
+            "type": "string",
+            "description": "供试材料：世代材料(gen-)或品种版本(varver-)。"
+          },
+          "site_id": { "type": "string" },
+          "slot_id": { "type": "string" },
+          "year": { "type": "integer" },
+          "team_id": { "type": "string" },
+          "indicators": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "value", "meets_target"],
+              "properties": {
+                "name": { "type": "string" },
+                "value": { "type": "string" },
+                "meets_target": { "type": "boolean" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "outcome": {
+            "type": "string",
+            "enum": ["达标晋级", "负面淘汰", "终止观察", "待定"]
+          },
+          "negative_detail": {
+            "type": "string",
+            "description": "outcome 为负面淘汰/终止观察时填写缺陷表现。"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "market_signals": {
+      "type": "array",
+      "description": "企业前置需求与市场信息，进入育种阶段即登记，而非品种审定后才出现。",
+      "items": {
+        "type": "object",
+        "required": ["id", "enterprise_id", "received_date", "channel", "summary", "demands"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^sig-" },
+          "enterprise_id": { "type": "string" },
+          "received_date": { "type": "string", "format": "date" },
+          "channel": { "type": "string", "enum": ["前置对接会", "联合育种协议", "推广反馈", "订单咨询"] },
+          "summary": { "type": "string" },
+          "demands": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["trait", "expectation", "region_code"],
+              "properties": {
+                "trait": { "type": "string" },
+                "expectation": { "type": "string" },
+                "region_code": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "breeding_decisions": {
+      "type": "array",
+      "description": "育种决策。based_on_signal_ids 使“市场信息改变了哪次决策”可被解释。",
+      "items": {
+        "type": "object",
+        "required": ["id", "date", "team_id", "action", "rationale"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^dec-" },
+          "date": { "type": "string", "format": "date" },
+          "team_id": { "type": "string" },
+          "variety_id": { "type": "string" },
+          "generation_id": { "type": "string" },
+          "trial_ids": { "type": "array", "items": { "type": "string" } },
+          "based_on_signal_ids": { "type": "array", "items": { "type": "string" } },
+          "action": {
+            "type": "string",
+            "enum": ["调整目标性状", "更换亲本", "提早定型", "终止世代", "调整区域试验", "更名"]
+          },
+          "rationale": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "varieties": {
+      "type": "array",
+      "description": "品种及其不可变版本；审定、许可、批次全部挂在具体版本上。",
+      "items": {
+        "type": "object",
+        "required": ["id", "versions"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^var-" },
+          "versions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "version_no",
+                "derived_from_generation_id",
+                "breeding_team_ids",
+                "joint_breeding",
+                "released_date",
+                "status"
+              ],
+              "properties": {
+                "version_no": { "type": "string", "pattern": "^v[0-9]+$" },
+                "derived_from_generation_id": { "type": "string" },
+                "breeding_team_ids": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+                "joint_breeding": { "type": "boolean" },
+                "released_date": { "type": "string", "format": "date" },
+                "status": { "type": "string", "enum": ["在试", "审定中", "已审定", "退市"] }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "variety_names": {
+      "type": "array",
+      "description": "品种名称登记，含更名前后；current=false 的名称不得用于新批次标签。",
+      "items": {
+        "type": "object",
+        "required": ["variety_id", "name", "current", "effective_date"],
+        "properties": {
+          "variety_id": { "type": "string" },
+          "name": { "type": "string", "minLength": 1 },
+          "current": { "type": "boolean" },
+          "effective_date": { "type": "string", "format": "date" },
+          "renamed_from": { "type": "string" },
+          "reason": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "registrations": {
+      "type": "array",
+      "description": "审定/登记记录。",
+      "items": {
+        "type": "object",
+        "required": ["id", "variety_id", "version_no", "kind", "number", "status", "adapted_regions"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^reg-" },
+          "variety_id": { "type": "string" },
+          "version_no": { "type": "string" },
+          "kind": { "type": "string", "enum": ["国家审定", "省级审定", "品种登记", "引种备案"] },
+          "number": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "enum": ["申请中", "通过", "撤销"] },
+          "adapted_regions": { "type": "array", "items": { "type": "string" } },
+          "issued_date": { "type": "string", "format": "date" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "plant_variety_rights": {
+      "type": "array",
+      "description": "植物新品种权/知识产权；联合育种下按份共有。",
+      "items": {
+        "type": "object",
+        "required": ["id", "variety_id", "version_no", "number", "status", "owners"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^pvr-" },
+          "variety_id": { "type": "string" },
+          "version_no": { "type": "string" },
+          "number": { "type": "string" },
+          "status": { "type": "string", "enum": ["申请中", "授权", "终止"] },
+          "owners": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["team_id", "share"],
+              "properties": {
+                "team_id": { "type": "string" },
+                "share": { "type": "number", "exclusiveMinimum": 0, "maximum": 100 }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "licenses": {
+      "type": "array",
+      "description": "品种许可。许可挂版本、列授权区域；共有品种权对外许可需共有人同意。",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "variety_id",
+          "version_no",
+          "licensee_enterprise_id",
+          "type",
+          "regions",
+          "status",
+          "start_date",
+          "co_owner_consents"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^lic-" },
+          "variety_id": { "type": "string" },
+          "version_no": { "type": "string" },
+          "licensee_enterprise_id": { "type": "string" },
+          "type": { "type": "string", "enum": ["独占", "排他", "普通"] },
+          "regions": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "status": { "type": "string", "enum": ["生效", "终止"] },
+          "start_date": { "type": "string", "format": "date" },
+          "end_date": { "type": "string", "format": "date" },
+          "co_owner_consents": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["team_id", "consented"],
+              "properties": {
+                "team_id": { "type": "string" },
+                "consented": { "type": "boolean" },
+                "date": { "type": "string", "format": "date" }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "data_grants": {
+      "type": "array",
+      "description": "数据可见性授权：企业只能查看获准范围内对象，其他团队未公开材料不可见。",
+      "items": {
+        "type": "object",
+        "required": ["id", "enterprise_id", "scope"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^grt-" },
+          "enterprise_id": { "type": "string" },
+          "scope": {
+            "type": "object",
+            "required": ["germplasm_ids", "generation_ids", "variety_version_refs"],
+            "properties": {
+              "germplasm_ids": { "type": "array", "items": { "type": "string" } },
+              "generation_ids": { "type": "array", "items": { "type": "string" } },
+              "variety_version_refs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["variety_id", "version_no"],
+                  "properties": {
+                    "variety_id": { "type": "string" },
+                    "version_no": { "type": "string" }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cultivation_guides": {
+      "type": "array",
+      "description": "配套栽培技术，随品种版本按区域沉淀，避免散落在不同团队。",
+      "items": {
+        "type": "object",
+        "required": ["id", "variety_id", "version_no", "region_code", "team_id", "content_summary"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^gui-" },
+          "variety_id": { "type": "string" },
+          "version_no": { "type": "string" },
+          "region_code": { "type": "string" },
+          "team_id": { "type": "string" },
+          "content_summary": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "promotion_feedbacks": {
+      "type": "array",
+      "description": "推广反馈：来自销售区域，可生成市场信号回流育种。",
+      "items": {
+        "type": "object",
+        "required": ["id", "variety_id", "version_no", "region_code", "enterprise_id", "date", "summary"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^fb-" },
+          "variety_id": { "type": "string" },
+          "version_no": { "type": "string" },
+          "region_code": { "type": "string" },
+          "enterprise_id": { "type": "string" },
+          "date": { "type": "string", "format": "date" },
+          "summary": { "type": "string" },
+          "resulted_signal_id": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "seed_batches": {
+      "type": "array",
+      "description": "种子生产批次：锁定品种版本、标称名称与来源许可。",
+      "items": {
+        "type": "object",
+        "required": ["id", "variety_id", "version_no", "labeled_name", "license_id", "produced_date"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^bat-" },
+          "variety_id": { "type": "string" },
+          "version_no": { "type": "string" },
+          "labeled_name": { "type": "string" },
+          "license_id": { "type": "string" },
+          "produced_date": { "type": "string", "format": "date" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "sales": {
+      "type": "array",
+      "description": "销售记录：证明售出种子来自获准版本，且落在许可区域与期限内。",
+      "items": {
+        "type": "object",
+        "required": ["id", "batch_id", "enterprise_id", "region_code", "date"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^sal-" },
+          "batch_id": { "type": "string" },
+          "enterprise_id": { "type": "string" },
+          "region_code": { "type": "string" },
+          "date": { "type": "string", "format": "date" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

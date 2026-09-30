@@ -1,21 +1,17 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "领域资料",
+  "title": "领域资料信封",
+  "description": "信封只描述资料批次本身；连续谱系的全部业务对象由 catalog.schema.json 约定。",
   "type": "object",
-  "required": [
-    "domain",
-    "version",
-    "facts",
-    "sample_id"
-  ],
+  "required": ["domain", "version", "facts", "sample_id"],
   "properties": {
     "domain": {
       "type": "string",
-      "minLength": 1
+      "const": "seed-commercialization"
     },
     "version": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 2
     },
     "facts": {
       "type": "array",
